@@ -1,28 +1,40 @@
 import React, { FunctionComponent } from "react";
 import "./UserCard.css";
 
-enum UserPosition {
+import { UserTags } from "./UserTags";
+
+export enum UserPosition {
   FRONTEND = "Front-end Developer",
   BACKEND = "Back-end Devevloper",
   TESTER = "Quality Assurance"
 }
 
-interface Contact {
-  name: string;
-  position: UserPosition;
+export enum ContactTag {
+  TECH_LEAD = "Technical Tead",
+  DEVELOPER = "Developer",
+  MANAGER = "Manager"
 }
 
-export const UserCard: FunctionComponent<{}> = () => {
-  const contact: Contact = {
-    name: "Szymon Piwowarczyk",
-    position: UserPosition.FRONTEND
-  };
+export interface Contact {
+  id: number;
+  name: string;
+  position: UserPosition;
+  tags?: ContactTag[];
+  favourite?: boolean;
+}
+
+interface UserCardProperties {
+  contact: Contact;
+}
+
+export const UserCard: FunctionComponent<UserCardProperties> = ({ contact }) => {
   return (
     <div className="userCard">
       <span className="photo"></span>
       <div className="details">
         <span className="name">{contact.name}</span>
         <span className="position">{contact.position}</span>
+        {contact.tags ? <UserTags tags={contact.tags} /> : ""}
       </div>
     </div>
   );
