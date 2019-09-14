@@ -29,14 +29,21 @@ interface UserCardProperties {
 
 export const UserCard: FunctionComponent<UserCardProperties> = ({ contact }) => {
   const [isHovered, setHovered] = useState<boolean>(false);
+  const [keepExpanded, setKeepExpanded] = useState<boolean>(false);
+  const toggleKeepExpanded = () => setKeepExpanded(!keepExpanded);
 
   return (
-    <div className="userCard" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div
+      className="userCard"
+      onClick={toggleKeepExpanded}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <span className="photo"></span>
       <div className="details">
         <span className="name">{contact.name}</span>
         <span className="position">{contact.position}</span>
-        {contact.tags ? <UserTags hidden={!isHovered} tags={contact.tags} /> : ""}
+        {contact.tags ? <UserTags hidden={!isHovered && !keepExpanded} tags={contact.tags} /> : ""}
       </div>
     </div>
   );
