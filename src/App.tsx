@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from "react";
 
+import { UserCard } from "./UserCard";
+
 const App: FunctionComponent<{}> = () => {
-  return <h1>Hello DevMeetings</h1>;
+  return <UserCard />;
 };
 
 export default App;
