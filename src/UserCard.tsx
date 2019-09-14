@@ -28,12 +28,10 @@ interface UserCardProperties {
 }
 
 export const UserCard: FunctionComponent<UserCardProperties> = ({ contact }) => {
-  const [isHovered, setHoveredValue] = useState<boolean>(false);
-  const setHovered = () => setHoveredValue(true);
-  const setUnhovered = () => setHoveredValue(false);
+  const [isHovered, setHovered] = useState<boolean>(false);
 
   return (
-    <div className="userCard" onMouseEnter={setHovered} onMouseLeave={setUnhovered}>
+    <div className="userCard" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <span className="photo"></span>
       <div className="details">
         <span className="name">{contact.name}</span>

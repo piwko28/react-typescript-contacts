@@ -1,0 +1,21 @@
+.userFilter {
+  display: block;
+  padding: 20px;
+  background: seashell;
+}
+
+.userFilter > span {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: normal;
+  font-family: Arial;
+}
+
+.userFilter input {
+  padding: 10px;
+  font-size: 14px;
+  font-family: Arial;
+  line-height: 16px;
+}

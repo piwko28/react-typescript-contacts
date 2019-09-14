@@ -1,7 +1,9 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
+import "./App.css";
 
 import { UserPosition, Contact, ContactTag } from "./UserCard";
 import { UserList } from "./UserList";
+import { UserFilter, UserFilterQuery } from "./UserFilter";
 
 const contacts: Contact[] = [
   {
@@ -24,15 +26,28 @@ const contacts: Contact[] = [
 ];
 
 const App: FunctionComponent<{}> = () => {
+  const [filteredContacts, setFilteredContacts] = useState<Contact[]>(contacts);
+
+  const onSearch = (input: UserFilterQuery) => {
+    setFilteredContacts(
+      contacts.filter(contact =>
+        JSON.stringify(contact)
+          .toLowerCase()
+          .includes(input.toLowerCase())
+      )
+    );
+  };
+
   return (
     <div>
+      <UserFilter onSearch={onSearch} />
       <div>
         <h1>Contacts</h1>
-        <UserList contacts={contacts} />
+        <UserList contacts={filteredContacts} />
       </div>
       <div>
         <h1>Favourites</h1>
-        <UserList contacts={contacts.filter(contact => contact.favourite)} />
+        <UserList contacts={filteredContacts.filter(contact => contact.favourite)} />
       </div>
     </div>
   );
