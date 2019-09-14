@@ -4,6 +4,7 @@ import "./App.css";
 import { UserPosition, Contact, ContactTag } from "./UserCard";
 import { UserList } from "./UserList";
 import { UserFilter, UserFilterQuery } from "./UserFilter";
+import { UserActions } from "./UserActions";
 
 const contacts: Contact[] = [
   {
@@ -40,7 +41,9 @@ const App: FunctionComponent<{}> = () => {
 
   return (
     <div>
-      <UserFilter onSearch={onSearch} />
+      <UserActions>
+        <UserFilter onSearch={onSearch} />
+      </UserActions>
       <div>
         <h1>Contacts</h1>
         <UserList contacts={filteredContacts} />
