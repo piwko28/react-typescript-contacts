@@ -7,6 +7,7 @@
   font-family: Arial;
   border: 2px solid goldenrod;
   background: bisque;
+  cursor: pointer;
 }
 
 .userCard .photo {

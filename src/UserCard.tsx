@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import "./UserCard.css";
 
 import { UserTags } from "./UserTags";
@@ -28,13 +28,17 @@ interface UserCardProperties {
 }
 
 export const UserCard: FunctionComponent<UserCardProperties> = ({ contact }) => {
+  const [isHovered, setHoveredValue] = useState<boolean>(false);
+  const setHovered = () => setHoveredValue(true);
+  const setUnhovered = () => setHoveredValue(false);
+
   return (
-    <div className="userCard">
+    <div className="userCard" onMouseEnter={setHovered} onMouseLeave={setUnhovered}>
       <span className="photo"></span>
       <div className="details">
         <span className="name">{contact.name}</span>
         <span className="position">{contact.position}</span>
-        {contact.tags ? <UserTags tags={contact.tags} /> : ""}
+        {contact.tags ? <UserTags hidden={!isHovered} tags={contact.tags} /> : ""}
       </div>
     </div>
   );
