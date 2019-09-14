@@ -5,6 +5,7 @@ import { UserPosition, Contact, ContactTag } from "./UserCard";
 import { UserList } from "./UserList";
 import { UserFilter, UserFilterQuery } from "./UserFilter";
 import { UserActions } from "./UserActions";
+import { SortingDirection, UserSorting } from "./UserSorting";
 
 const contacts: Contact[] = [
   {
@@ -27,22 +28,33 @@ const contacts: Contact[] = [
 ];
 
 const App: FunctionComponent<{}> = () => {
-  const [filteredContacts, setFilteredContacts] = useState<Contact[]>(contacts);
+  const [sorting, setSorting] = useState<SortingDirection>(SortingDirection.ASCENDING);
+  const sortByName = (a: Contact, b: Contact): number =>
+    sorting === SortingDirection.ASCENDING ? (a.name > b.name ? 1 : -1) : a.name < b.name ? 1 : -1;
+  const [filteredContacts, setFilteredContacts] = useState<Contact[]>(contacts.sort(sortByName));
 
   const onSearch = (input: UserFilterQuery) => {
     setFilteredContacts(
-      contacts.filter(contact =>
-        JSON.stringify(contact)
-          .toLowerCase()
-          .includes(input.toLowerCase())
-      )
+      contacts
+        .filter(contact =>
+          JSON.stringify(contact)
+            .toLowerCase()
+            .includes(input.toLowerCase())
+        )
+        .sort(sortByName)
     );
+  };
+
+  const onSort = (direction: SortingDirection) => {
+    setSorting(direction);
+    setFilteredContacts(filteredContacts.sort(sortByName));
   };
 
   return (
     <div>
       <UserActions>
         <UserFilter onSearch={onSearch} />
+        <UserSorting onSort={onSort} />
       </UserActions>
       <div>
         <h1>Contacts</h1>
