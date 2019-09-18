@@ -1,4 +1,4 @@
-import React, { FunctionComponent, KeyboardEvent, useState } from "react";
+import React, { FunctionComponent, KeyboardEvent } from "react";
 import "./UserFilter.css";
 
 export type UserFilterQuery = string;

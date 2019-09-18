@@ -40,7 +40,7 @@ export const UserCard: FunctionComponent<UserCardProperties> = ({ contact }) => 
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img className="photo" src={contact.photoUrl} />
+      <img className="photo" src={contact.photoUrl} alt="thumbnail" />
       <div className="details">
         <span className="name">{contact.name}</span>
         <span className="position">{contact.position}</span>
