@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import "./App.css";
 
 import { UserPosition, Contact, ContactTag } from "./UserCard";
@@ -27,27 +27,35 @@ const contacts: Contact[] = [
   }
 ];
 
+const sortByName = (direction: SortingDirection): ((a: Contact, b: Contact) => number) =>
+  direction === SortingDirection.ASCENDING
+    ? (a, b) => (a.name > b.name ? 1 : -1)
+    : (a, b) => (a.name < b.name ? 1 : -1);
+
 const App: FunctionComponent<{}> = () => {
   const [sorting, setSorting] = useState<SortingDirection>(SortingDirection.ASCENDING);
-  const sortByName = (a: Contact, b: Contact): number =>
-    sorting === SortingDirection.ASCENDING ? (a.name > b.name ? 1 : -1) : a.name < b.name ? 1 : -1;
-  const [filteredContacts, setFilteredContacts] = useState<Contact[]>(contacts.sort(sortByName));
+  const [filter, setFilter] = useState<UserFilterQuery>("");
+  const [filteredContacts, setFilteredContacts] = useState<Contact[]>([]);
+
+  const contactFilter = (contact: Contact, filter: UserFilterQuery): boolean => {
+    return filter
+      ? JSON.stringify(contact)
+          .toLowerCase()
+          .includes(filter.toLowerCase())
+      : true;
+  };
+
+  useEffect(() => {
+    setFilteredContacts(contacts.filter(contact => contactFilter(contact, filter)).sort(sortByName(sorting)));
+  }, [sorting, filter]);
 
   const onSearch = (input: UserFilterQuery) => {
-    setFilteredContacts(
-      contacts
-        .filter(contact =>
-          JSON.stringify(contact)
-            .toLowerCase()
-            .includes(input.toLowerCase())
-        )
-        .sort(sortByName)
-    );
+    setFilter(input);
   };
 
   const onSort = (direction: SortingDirection) => {
     setSorting(direction);
-    setFilteredContacts(filteredContacts.sort(sortByName));
+    setFilteredContacts(filteredContacts.sort(sortByName(sorting)));
   };
 
   return (
