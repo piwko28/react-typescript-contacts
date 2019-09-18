@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState } from "react";
 
 export enum SortingDirection {
-  ASCENDING,
-  DESCENDING
+  ASCENDING = "asc",
+  DESCENDING = "desc"
 }
 
 interface UserSortingProperties {
@@ -12,13 +12,16 @@ interface UserSortingProperties {
 export const UserSorting: FunctionComponent<UserSortingProperties> = ({ onSort }) => {
   const [sorting, setSorting] = useState<SortingDirection>(SortingDirection.ASCENDING);
   const toggleSorting = () => {
-    setSorting(sorting === SortingDirection.ASCENDING ? SortingDirection.DESCENDING : SortingDirection.ASCENDING);
-    onSort(sorting);
+    const newSorting =
+      sorting === SortingDirection.ASCENDING ? SortingDirection.DESCENDING : SortingDirection.ASCENDING;
+    setSorting(newSorting);
+    onSort(newSorting);
   };
 
   return (
-    <div className="userSorting" onClick={toggleSorting}>
-      <button>{sorting === SortingDirection.ASCENDING ? "Ascending" : "Descending"}</button>
-    </div>
+    <label className="userSorting">
+      <span>Sorting:</span>
+      <button onClick={toggleSorting}>{sorting === SortingDirection.ASCENDING ? "Ascending" : "Descending"}</button>
+    </label>
   );
 };

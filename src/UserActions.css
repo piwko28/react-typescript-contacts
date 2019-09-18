@@ -1,5 +1,22 @@
 .userActions {
-  display: block;
-  padding: 20px;
+  display: flex;
+  padding: 20px 0;
   background: seashell;
+}
+
+.userActions > * {
+  margin: 0 20px;
+}
+
+.userActions label {
+  display: block;
+}
+
+.userActions label > span {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: normal;
+  font-family: Arial;
 }
