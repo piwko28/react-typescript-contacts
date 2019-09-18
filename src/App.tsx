@@ -15,6 +15,9 @@ interface RandomContact {
   dob: {
     age: number;
   };
+  picture: {
+    thumbnail: string;
+  };
 }
 
 const sortByName = (direction: SortingDirection): ((a: Contact, b: Contact) => number) =>
@@ -50,6 +53,7 @@ const App: FunctionComponent<{}> = () => {
               id,
               name: `${contact.name.first} ${contact.name.last}`,
               position: UserPosition.FRONTEND,
+              photoUrl: contact.picture.thumbnail,
               tags:
                 contact.dob.age < 35
                   ? [ContactTag.DEVELOPER]

@@ -19,6 +19,7 @@ export interface Contact {
   id: number;
   name: string;
   position: UserPosition;
+  photoUrl: string;
   tags?: ContactTag[];
   favourite?: boolean;
 }
@@ -39,7 +40,7 @@ export const UserCard: FunctionComponent<UserCardProperties> = ({ contact }) => 
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <span className="photo"></span>
+      <img className="photo" src={contact.photoUrl} />
       <div className="details">
         <span className="name">{contact.name}</span>
         <span className="position">{contact.position}</span>

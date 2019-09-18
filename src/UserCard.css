@@ -1,13 +1,15 @@
 .userCard {
   display: inline-block;
   width: 300px;
+  min-height: 72px;
   box-sizing: border-box;
-  padding: 16px;
-  margin: 16px;
+  padding: 4px 8px;
+  margin: 8px;
   font-family: Arial;
   border: 2px solid goldenrod;
   background: bisque;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 .userCard .photo {
