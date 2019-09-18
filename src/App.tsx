@@ -7,25 +7,15 @@ import { UserFilter, UserFilterQuery } from "./UserFilter";
 import { UserActions } from "./UserActions";
 import { SortingDirection, UserSorting } from "./UserSorting";
 
-const contacts: Contact[] = [
-  {
-    id: 1,
-    name: "Szymon Piwowarczyk",
-    position: UserPosition.FRONTEND,
-    favourite: true
-  },
-  {
-    id: 2,
-    name: "Patsy Burton",
-    position: UserPosition.TESTER
-  },
-  {
-    id: 3,
-    name: "grgrs",
-    position: UserPosition.BACKEND,
-    tags: [ContactTag.MANAGER]
-  }
-];
+interface RandomContact {
+  name: {
+    first: string;
+    last: string;
+  };
+  dob: {
+    age: number;
+  };
+}
 
 const sortByName = (direction: SortingDirection): ((a: Contact, b: Contact) => number) =>
   direction === SortingDirection.ASCENDING
@@ -35,6 +25,7 @@ const sortByName = (direction: SortingDirection): ((a: Contact, b: Contact) => n
 const App: FunctionComponent<{}> = () => {
   const [sorting, setSorting] = useState<SortingDirection>(SortingDirection.ASCENDING);
   const [filter, setFilter] = useState<UserFilterQuery>("");
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [filteredContacts, setFilteredContacts] = useState<Contact[]>([]);
 
   const contactFilter = (contact: Contact, filter: UserFilterQuery): boolean => {
@@ -47,7 +38,32 @@ const App: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     setFilteredContacts(contacts.filter(contact => contactFilter(contact, filter)).sort(sortByName(sorting)));
-  }, [sorting, filter]);
+  }, [contacts, sorting, filter]);
+
+  useEffect(() => {
+    fetch("https://randomuser.me/api/?results=20&seed=r")
+      .then(response => response.json())
+      .then(data => {
+        setContacts(
+          data.results.map(
+            (contact: RandomContact, id: number): Contact => ({
+              id,
+              name: `${contact.name.first} ${contact.name.last}`,
+              position: UserPosition.FRONTEND,
+              tags:
+                contact.dob.age < 35
+                  ? [ContactTag.DEVELOPER]
+                  : contact.dob.age > 35
+                  ? [ContactTag.TECH_LEAD]
+                  : contact.dob.age > 36
+                  ? [ContactTag.MANAGER]
+                  : [],
+              favourite: contact.dob.age < 40
+            })
+          )
+        );
+      });
+  }, []);
 
   const onSearch = (input: UserFilterQuery) => {
     setFilter(input);
