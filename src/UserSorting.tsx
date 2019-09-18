@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 
+import "./UserSorting.css";
+
 export enum SortingDirection {
   ASCENDING = "asc",
   DESCENDING = "desc"

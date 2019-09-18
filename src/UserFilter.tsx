@@ -8,12 +8,9 @@ interface UserFilterProperties {
 }
 
 export const UserFilter: FunctionComponent<UserFilterProperties> = ({ onSearch }) => {
-  const [filterQuery, setFilterQuery] = useState<UserFilterQuery>("");
-
   const search = (event: KeyboardEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement;
-    setFilterQuery(target.value);
-    onSearch(filterQuery);
+    const { value } = event.target as HTMLInputElement;
+    onSearch(value);
   };
 
   return (
