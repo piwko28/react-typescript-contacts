@@ -1,7 +1,10 @@
 import React, { FunctionComponent, useState } from "react";
-import "./UserCard.css";
+import { connect } from "react-redux";
 
+import "./UserCard.css";
 import { UserTags } from "./UserTags";
+import { ContactsState, contactSelected, ContactSelectedAction, State } from "./store";
+import { ActionCreator } from "redux";
 
 export enum UserPosition {
   FRONTEND = "Front-end Developer",
@@ -26,17 +29,39 @@ export interface Contact {
 
 interface UserCardProperties {
   contact: Contact;
+  selectedContact: ContactsState["selectedContact"];
+  contactSelected: ActionCreator<ContactSelectedAction>;
 }
 
-export const UserCard: FunctionComponent<UserCardProperties> = ({ contact }) => {
+// const mapStateToProps = ({ selectedContact }: ContactsState) => ({
+//   selectedContact
+// });
+
+const mapStateToProps = ({ contactsReducer }: State) => {
+  const { selectedContact } = contactsReducer;
+  return {
+    selectedContact
+  };
+};
+
+const mapDispatchToProps = {
+  contactSelected
+};
+
+const UserCardComponent: FunctionComponent<UserCardProperties> = ({ contact, selectedContact, contactSelected }) => {
   const [isHovered, setHovered] = useState<boolean>(false);
   const [keepExpanded, setKeepExpanded] = useState<boolean>(false);
   const toggleKeepExpanded = () => setKeepExpanded(!keepExpanded);
 
+  const onClick = () => {
+    toggleKeepExpanded();
+    contactSelected(contact);
+  };
+
   return (
     <div
-      className="userCard"
-      onClick={toggleKeepExpanded}
+      className={"userCard" + (selectedContact === contact ? " selected" : "")}
+      onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -49,3 +74,8 @@ export const UserCard: FunctionComponent<UserCardProperties> = ({ contact }) => 
     </div>
   );
 };
+
+export const UserCard = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserCardComponent);
