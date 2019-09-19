@@ -25,7 +25,7 @@ const sortByName = (direction: SortingDirection): ((a: Contact, b: Contact) => n
     ? (a, b) => (a.name > b.name ? 1 : -1)
     : (a, b) => (a.name < b.name ? 1 : -1);
 
-const Contacts: FunctionComponent<{}> = () => {
+export const Contacts: FunctionComponent<{}> = () => {
   const [sorting, setSorting] = useState<SortingDirection>(SortingDirection.ASCENDING);
   const [filter, setFilter] = useState<UserFilterQuery>("");
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -95,5 +95,3 @@ const Contacts: FunctionComponent<{}> = () => {
     </div>
   );
 };
-
-export default Contacts;

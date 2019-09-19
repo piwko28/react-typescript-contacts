@@ -2,9 +2,11 @@ import React, { FunctionComponent, useState } from "react";
 import { connect } from "react-redux";
 import { ActionCreator } from "redux";
 
+import { HighlightText } from "../../../shared/components/HighlightText";
 import { State } from "../../../store";
 import { contactSelected, ContactSelectedAction } from "../../store/actions";
 import { ContactsState } from "../../store/state";
+import { UserFilterQuery } from "../actions/UserFilter";
 import "./UserCard.css";
 import { UserTags } from "./UserTags";
 
@@ -33,12 +35,14 @@ interface UserCardProperties {
   contact: Contact;
   selectedContact: ContactsState["selectedContact"];
   contactSelected: ActionCreator<ContactSelectedAction>;
+  filterQuery: UserFilterQuery;
 }
 
 const mapStateToProps = ({ contactsReducer }: State) => {
-  const { selectedContact } = contactsReducer;
+  const { selectedContact, filterQuery } = contactsReducer;
   return {
-    selectedContact
+    selectedContact,
+    filterQuery
   };
 };
 
@@ -46,7 +50,12 @@ const mapDispatchToProps = {
   contactSelected
 };
 
-const UserCardComponent: FunctionComponent<UserCardProperties> = ({ contact, selectedContact, contactSelected }) => {
+const UserCardComponent: FunctionComponent<UserCardProperties> = ({
+  contact,
+  selectedContact,
+  contactSelected,
+  filterQuery
+}) => {
   const [isHovered, setHovered] = useState<boolean>(false);
   const [keepExpanded, setKeepExpanded] = useState<boolean>(false);
   const toggleKeepExpanded = () => setKeepExpanded(!keepExpanded);
@@ -65,8 +74,12 @@ const UserCardComponent: FunctionComponent<UserCardProperties> = ({ contact, sel
     >
       <img className="photo" src={contact.photoUrl} alt="thumbnail" />
       <div className="details">
-        <span className="name">{contact.name}</span>
-        <span className="position">{contact.position}</span>
+        <span className="name">
+          <HighlightText text={contact.name} highlighted={filterQuery} />
+        </span>
+        <span className="position">
+          <HighlightText text={contact.position} highlighted={filterQuery} />
+        </span>
         {contact.tags ? <UserTags hidden={!isHovered && !keepExpanded} tags={contact.tags} /> : ""}
       </div>
     </div>
