@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
-import "./Contacts.css";
 
 import { UserPosition, Contact, ContactTag } from "./list/UserCard";
 import { UserList } from "./list/UserList";

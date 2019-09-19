@@ -1,0 +1,5 @@
+.layoutSelector.dark select {
+  background: black;
+  color: white;
+  border-color: white;
+}

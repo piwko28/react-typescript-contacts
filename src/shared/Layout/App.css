@@ -1,7 +1,7 @@
 body {
   margin: 0;
   border-color: seashell;
-  border-width: 0 30px 40px 30px;
+  border-width: 0 30px 30px;
   border-style: solid;
 }
 
@@ -9,4 +9,9 @@ h1 {
   margin: 30px 10px 10px;
   font-family: Arial;
   font-weight: normal;
+}
+
+footer {
+  padding: 30px;
+  background: seashell;
 }
