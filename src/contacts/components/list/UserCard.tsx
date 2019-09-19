@@ -1,10 +1,12 @@
 import React, { FunctionComponent, useState } from "react";
 import { connect } from "react-redux";
+import { ActionCreator } from "redux";
 
+import { State } from "../../../store";
+import { contactSelected, ContactSelectedAction } from "../../store/actions";
+import { ContactsState } from "../../store/state";
 import "./UserCard.css";
 import { UserTags } from "./UserTags";
-import { ContactsState, contactSelected, ContactSelectedAction, State } from "./store";
-import { ActionCreator } from "redux";
 
 export enum UserPosition {
   FRONTEND = "Front-end Developer",
@@ -32,10 +34,6 @@ interface UserCardProperties {
   selectedContact: ContactsState["selectedContact"];
   contactSelected: ActionCreator<ContactSelectedAction>;
 }
-
-// const mapStateToProps = ({ selectedContact }: ContactsState) => ({
-//   selectedContact
-// });
 
 const mapStateToProps = ({ contactsReducer }: State) => {
   const { selectedContact } = contactsReducer;

@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
-import "./App.css";
+import "./Contacts.css";
 
-import { UserPosition, Contact, ContactTag } from "./UserCard";
-import { UserList } from "./UserList";
-import { UserFilter, UserFilterQuery } from "./UserFilter";
-import { UserActions } from "./UserActions";
-import { SortingDirection, UserSorting } from "./UserSorting";
+import { UserPosition, Contact, ContactTag } from "./list/UserCard";
+import { UserList } from "./list/UserList";
+import { UserFilter, UserFilterQuery } from "./actions/UserFilter";
+import { UserActions } from "./actions/UserActions";
+import { SortingDirection, UserSorting } from "./actions/UserSorting";
 
 interface RandomContact {
   name: {
@@ -25,7 +25,7 @@ const sortByName = (direction: SortingDirection): ((a: Contact, b: Contact) => n
     ? (a, b) => (a.name > b.name ? 1 : -1)
     : (a, b) => (a.name < b.name ? 1 : -1);
 
-const App: FunctionComponent<{}> = () => {
+const Contacts: FunctionComponent<{}> = () => {
   const [sorting, setSorting] = useState<SortingDirection>(SortingDirection.ASCENDING);
   const [filter, setFilter] = useState<UserFilterQuery>("");
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -96,4 +96,4 @@ const App: FunctionComponent<{}> = () => {
   );
 };
 
-export default App;
+export default Contacts;

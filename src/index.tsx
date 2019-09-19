@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import App from "./App";
+import Contacts from "./contacts/components/Contacts";
 import { store } from "./store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Contacts />
   </Provider>,
   document.getElementById("root")
 );
